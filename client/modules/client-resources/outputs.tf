@@ -53,3 +53,13 @@ output "container_environment_name" {
   value       = azurerm_container_app_environment.client.name
 }
 
+output "log_analytics_workspace_id" {
+  description = "ID of the Log Analytics Workspace (for cost tracking)"
+  value       = azurerm_log_analytics_workspace.client.id
+}
+
+output "logs_container_name" {
+  description = "Name of the blob storage container for archived logs"
+  value       = azurerm_storage_container.logs.name
+}
+

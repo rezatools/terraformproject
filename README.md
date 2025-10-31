@@ -37,6 +37,30 @@ Each client deployment creates a resource group (`rg-{client-name}`) with:
 - **Azure Container Environment**: Environment for running Azure Container Jobs
   - Configured to pull images from shared ACR
   - Supports scheduled and manual job execution
+- **Log Analytics Workspace**: Required for Container Apps (minimal configuration for cost efficiency)
+- **Log Archival**: Diagnostic settings forward logs to blob storage for long-term retention
+
+### Cost-Optimized Logging
+
+The logging configuration is optimized for infrequent runs (1-2 times per day):
+
+- **Log Analytics Workspace**: Uses `PerGB2018` SKU (pay-per-GB, ~$2.30/GB)
+  - Minimal retention: 7 days (minimum allowed)
+  - Only captures logs during active runs
+  - No fixed monthly costs for low-volume usage
+
+- **Log Archival to Blob Storage**: 
+  - Diagnostic settings automatically export logs to blob storage
+  - Reuses existing parquet storage account (no additional storage account cost)
+  - Much cheaper for long-term retention than Log Analytics retention
+  - Logs stored in path: `insights-logs-{category}/` as JSON files
+
+**Cost Estimate for 1-2 daily runs:**
+- Log Analytics: ~$0.10-0.50/month (depending on log volume)
+- Blob Storage: ~$0.02/GB/month for archived logs
+- Total: Typically under $1/month for low-volume logging
+
+For applications with very minimal logging needs, this provides cost-effective log retention while meeting Container Apps' requirement for a Log Analytics workspace.
 
 ### RBAC Permissions
 
@@ -183,6 +207,8 @@ Or via Azure Portal:
 - `key_vault_id`, `key_vault_name`, `key_vault_uri`
 - `storage_account_name`, `parquet_container_name`
 - `container_environment_name`
+- `log_analytics_workspace_id`
+- `logs_container_name`
 
 ## CI/CD Integration
 
