@@ -1,0 +1,14 @@
+# Example Terraform variables for client deployment
+# Copy this file to terraform.tfvars and customize with your values
+
+# client_name = "client-example"
+# location = "eastus"
+# group_users_object_id = "<your-azure-ad-group-object-id>"
+# shared_acr_login_server = "<shared-acr-login-server-url>"
+# shared_acr_id = "/subscriptions/<subscription-id>/resourceGroups/<rg-name>/providers/Microsoft.ContainerRegistry/registries/<acr-name>"
+
+# tags = {
+#   Environment = "production"
+#   Client      = "example-client"
+# }
+
